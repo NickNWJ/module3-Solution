@@ -10,7 +10,7 @@ angular.module('NarrowItDownApp', [])
 
 function FoundItems() {
 	var ddo = {
-	templateUrl: 'foundList.html',
+	templateUrl: 'founditems.html',
 		scope: {
 			found: '<',
 			onRemove: '&'
@@ -20,9 +20,6 @@ function FoundItems() {
 	return ddo;
 }
 
-
-
-
 NarrowItDownController.$inject = ['MenuSearchService', '$timeout'];
 function NarrowItDownController(MenuSearchService, $timeout) {
 	var list = this;
@@ -30,10 +27,10 @@ function NarrowItDownController(MenuSearchService, $timeout) {
 	list.showItems = function () {
 		if ( list.searchTerm == '' ) {
 			// The search term text box is empty
-			console.log('blank search term');
+			console.log('Blank search term');
 			list.found = [];
 		} else {
-			console.log('proper search term');
+			console.log('Proper search term');
 			//console.log('NarrowItDownController.showItems()');
 			var promise = MenuSearchService.getMatchedMenuItems( list.searchTerm );
 			promise.then( 	function (response) {
@@ -49,7 +46,7 @@ function NarrowItDownController(MenuSearchService, $timeout) {
 }
 
 
-// MenuSearch Service 
+// MenuSearch Service
 MenuSearchService.$inject = ['$http', 'ApiBasePath']
 function MenuSearchService($http, ApiBasePath) {
 	var service = this;
@@ -60,7 +57,7 @@ function MenuSearchService($http, ApiBasePath) {
 		return $http({ method: "GET", url: (ApiBasePath + "/menu_items.json")})
 			.then (	function( response ) {
 				return response.data['menu_items'].filter(
-					function (item) { 
+					function (item) {
 						return item.description.indexOf(searchTerm) !== -1;
 					}
 				);
